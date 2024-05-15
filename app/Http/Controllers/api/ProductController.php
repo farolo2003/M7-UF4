@@ -8,46 +8,55 @@ use App\Models\Productos;
 
 class ProductController extends Controller
 {
-    function index(){
+    function index()
+    {
         $product = Productos::all();
-        if($product){
-            return response()->json(['data' => $product], 200,[],JSON_UNESCAPED_UNICODE);
-        }else {
-            return response()->json(['data' => 'No hay productos'], 404,[],JSON_UNESCAPED_UNICODE);
+        if ($product) {
+            return response()->json(['data' => $product], 200, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            return response()->json(['data' => 'No hay productos'], 404, [], JSON_UNESCAPED_UNICODE);
         }
     }
 
-    function show($id){
-        $product=Productos::find($id);
-        if($product){
-            return response()->json(['data' => $product], 200,[],JSON_UNESCAPED_UNICODE);
-        }else {
-            return response()->json(['data' => 'No hay productos'], 404,[],JSON_UNESCAPED_UNICODE);
+    function show($id)
+    {
+        $product = Productos::find($id);
+        if ($product) {
+            return response()->json(['data' => $product], 200, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            return response()->json(['data' => 'No hay productos'], 404, [], JSON_UNESCAPED_UNICODE);
         }
     }
 
-    function store(Request $request){
+    function store(Request $request)
+    {
         $product = Productos::create($request->all());
-        if($product){
-            return response()->json(['data' => $product], 200,[],JSON_UNESCAPED_UNICODE);
-        }else {
-            return response()->json(['data' => 'No hay productos'], 404,[],JSON_UNESCAPED_UNICODE);
+        if ($product) {
+            return response()->json(['data' => $product], 200, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            return response()->json(['data' => 'No hay productos'], 404, [], JSON_UNESCAPED_UNICODE);
         }
     }
 
-    function update(Request $request, $id){
+    function update(Request $request, $id)
+    {
         $product = Productos::find($id);
-        if($product){
+        if ($product) {
             $product->update($request->all());
-            return response()->json(['data' => $product], 200,[],JSON_UNESCAPED_UNICODE);
-        }else {
-            return response()->json(['data' => 'No hay productos'], 404,[],JSON_UNESCAPED_UNICODE);
+            return response()->json(['data' => $product], 200, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            return response()->json(['data' => 'No hay productos'], 404, [], JSON_UNESCAPED_UNICODE);
         }
     }
 
-    function destroy($id) {
+    function destroy($id)
+    {
         $product = Productos::find($id);
-        $product->delete();
-        return response()->json(['data' => $product], 200,[],JSON_UNESCAPED_UNICODE);
+        if ($product) {
+            $product->delete();
+            return response()->json(['message' => 'Producto eliminado correctamente'], 200);
+        } else {
+            return response()->json(['error' => 'Producto no encontrado'], 404);
+        }
     }
 }
